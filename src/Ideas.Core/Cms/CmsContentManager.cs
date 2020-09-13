@@ -21,28 +21,23 @@ namespace Ideas.Cms
             _cmsRepository = pageRepository;
 
         }
-        public async Task<CmsContent> CreateOrUpdateAsync(CmsContent @page)
-        {
-            var insertOrUpdate = await _cmsRepository.InsertOrUpdateAsync(@page);
-            
-            return insertOrUpdate;
-        }
 
-
+   
         public async Task<CmsContent> CreatAsync(CmsContent input)
         {
-
-            var cmscontent = await _cmsRepository.InsertAsync(input);
-
-            return cmscontent;
+            
+           var id = await _cmsRepository.InsertAndGetIdAsync(input);
+           var content  = await GetAsync(id);
+            return content;
         }
-
+     
         public async Task<CmsContent> UpdateAsync(CmsContent input)
         {
-            var cmsContent = await _cmsRepository.FirstOrDefaultAsync(input.Id);
-
-            return cmsContent;
-
+           
+                await _cmsRepository.UpdateAsync(input);
+                var updatedContent = await GetAsync(input.Id);
+                return updatedContent;
+           
         }
         public async Task<List<CmsContent>> GetAllAsync()
         {

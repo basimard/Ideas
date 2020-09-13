@@ -61,19 +61,20 @@ namespace Ideas.Cms
             CmsContent content = new CmsContent();
 
 
-            var @page = content.Create(1, input.PageTitle, input.PageContent);
+            var @page = content.Create(1, (int)input.Id,input.PageTitle, input.PageContent);
 
-            if (input.Id.HasValue)
+            if (input.Id!=0)
             {
 
                 content = await _cmsContentManager.UpdateAsync(@page);
-
+              
 
             }
             else
             {
 
                 content = await _cmsContentManager.CreatAsync(@page);
+                UnitOfWorkManager.Current.SaveChangesAsync();
 
             }
 

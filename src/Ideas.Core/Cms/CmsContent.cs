@@ -27,15 +27,18 @@ namespace Ideas.Cms
         [StringLength(MaxDescriptionLength)]
         public string PageContent { get; set; }
 
-        public CmsContent Create(int tenantId, string pageTitle, string pageContent = null)
+        public CmsContent Create(int tenantId, int id,string pageTitle, string pageContent = null)
         {
-            var @page = new CmsContent
-            {
-                TenantId = tenantId,
-                PageTitle = pageTitle,
-                PageContent = pageContent
+             var @page = new CmsContent
+                {
+                    Id = id,
+                    TenantId = tenantId,
+                    PageTitle = pageTitle,
+                    PageContent = pageContent
 
-            };
+                };
+
+         
 
             return @page;
         }
