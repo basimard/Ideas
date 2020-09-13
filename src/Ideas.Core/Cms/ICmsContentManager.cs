@@ -10,7 +10,9 @@ namespace Ideas.Cms
     {
         Task<CmsContent> GetAsync(int id);
 
-        Task <CmsContent>CreateOrUpdateAsync(CmsContent @page);
+        Task <CmsContent>CreatAsync(CmsContent @page);
+
+        Task<CmsContent> UpdateAsync(CmsContent @page);
 
         Task<List<CmsContent>> GetAllAsync();
     }

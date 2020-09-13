@@ -13,18 +13,22 @@ using Abp.UI;
 
 namespace Ideas.Cms
 {
-    public class CmsContentAppService : IdeasAppServiceBase,ICmsContentAppService
+    /**
+     * Service Content Managment
+     * @author:Basim E
+     */
+    public class CmsContentAppService : IdeasAppServiceBase, ICmsContentAppService
     {
         private readonly IRepository<CmsContent, int> _cmsContentRepository;
         private readonly ICmsContentManager _cmsContentManager;
-        private readonly IMapper _mapper;
         private readonly IAbpSession _session;
         public CmsContentAppService(IRepository<CmsContent, int> cmsContentRepository,
-                       ICmsContentManager cmsContentManager,IAbpSession session)
+                       ICmsContentManager cmsContentManager, IAbpSession session)
         {
             _cmsContentRepository = cmsContentRepository;
             _cmsContentManager = cmsContentManager;
             _session = session;
+
         }
 
         public async Task<ListResultDto<ListAllCmsContentDto>> GetAll()
@@ -36,7 +40,7 @@ namespace Ideas.Cms
                 throw new UserFriendlyException("Could not found any pages.");
             }
 
-            return _mapper.Map<ListResultDto<ListAllCmsContentDto>>(pages);
+            return new ListResultDto<ListAllCmsContentDto>(pages.MapTo<List<ListAllCmsContentDto>>());
         }
 
         public async Task<GetSingleCmsContentOutput> GetCMSContent(EntityDto<int> input)
@@ -48,18 +52,34 @@ namespace Ideas.Cms
                 throw new UserFriendlyException("Could not found the page");
             }
 
-            return _mapper.Map<GetSingleCmsContentOutput>(@page);
-            
+            return @page.MapTo<GetSingleCmsContentOutput>();
+
         }
 
         public async Task<GetSingleCmsContentOutput> InsertOrUpdateCMSContent(InsertOrUpdateCmsInput input)
         {
             CmsContent content = new CmsContent();
-         
-            var @page =  content.Create(1, input.PageTitle, input.PageContent);
-            CmsContent @insertedOrUpdatedPage = await _cmsContentManager.CreateOrUpdateAsync(@page);
-            
-            return _mapper.Map<GetSingleCmsContentOutput>(insertedOrUpdatedPage);
+
+
+            var @page = content.Create(1, input.PageTitle, input.PageContent);
+
+            if (input.Id.HasValue)
+            {
+
+                content = await _cmsContentManager.UpdateAsync(@page);
+
+
+            }
+            else
+            {
+
+                content = await _cmsContentManager.CreatAsync(@page);
+
+            }
+
+            return content.MapTo<GetSingleCmsContentOutput>();
         }
+
     }
+
 }

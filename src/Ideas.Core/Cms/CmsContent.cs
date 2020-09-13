@@ -7,7 +7,11 @@ using System.Text;
 
 namespace Ideas.Cms
 {
-    public class CmsContent: FullAuditedEntity<int>, IMustHaveTenant
+    /**
+     * COntent Managment Entity
+     * @author: Basim E
+     * */
+    public class CmsContent : FullAuditedEntity<int>, IMustHaveTenant
     {
         public const int MaxTitleLength = 128;
         public const int MaxDescriptionLength = 2048;
@@ -27,7 +31,6 @@ namespace Ideas.Cms
         {
             var @page = new CmsContent
             {
-               
                 TenantId = tenantId,
                 PageTitle = pageTitle,
                 PageContent = pageContent
