@@ -84,18 +84,13 @@ namespace Ideas.Tests.Cms
         {
             var updatedTitle = "Title 1 Updated";
             var updatedContent = "Content 1 Updated";
+            int updatedPageId = 1;
             CmsContent updatingPage = new CmsContent();
-            await UsingDbContext(async (context) =>
+          
+
+           var updated = await _cmsAppService.InsertOrUpdateCMSContent(new InsertOrUpdateCmsInput
             {
-
-               updatingPage = await context.CmsContents.FirstOrDefaultAsync(e => e.Id ==1);
-              
-            });
-
-
-           await _cmsAppService.InsertOrUpdateCMSContent(new InsertOrUpdateCmsInput
-            {
-                Id = updatingPage.Id,
+                Id = 1,
                 PageTitle = updatedTitle,
                 PageContent = updatedContent,
 
@@ -106,7 +101,7 @@ namespace Ideas.Tests.Cms
             {
 
                 var page = context.CmsContents.
-                FirstOrDefault(e => e.Id == updatingPage.Id && 
+                FirstOrDefault(e => e.Id == updatedPageId && 
                 e.PageContent == updatedContent && e.PageTitle == updatedTitle);
                 page.ShouldNotBeNull();
             });

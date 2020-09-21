@@ -65,7 +65,7 @@ namespace Ideas.Cms
         {
             CmsContent content = new CmsContent();
 
-            var @page =  CmsContent.Create(1, (int)input.Id,input.PageTitle, input.PageContent);
+            var @page =  CmsContent.Create(AbpSession.GetTenantId(), (int)input.Id,input.PageTitle, input.PageContent);
 
             if (input.Id!=0)
             {
@@ -77,10 +77,8 @@ namespace Ideas.Cms
             else
             {
 
-                var id = await _cmsContentManager.CreatAsync(@page);
-                await UnitOfWorkManager.Current.SaveChangesAsync();
-                content = await _cmsContentManager.GetAsync(id);
-              
+                content = await _cmsContentManager.CreatAsync(@page);
+             
 
             }
 
