@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Abp.Auditing;
+﻿using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 using Ideas.Validation;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ideas.Authorization.Accounts.Dto
 {

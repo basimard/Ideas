@@ -1,18 +1,14 @@
-﻿using Abp.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Abp.Runtime.Session;
-using Ideas.Cms.Dtos;
-using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using Ideas.Sessions;
+﻿using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.AutoMapper;
+using Abp.Domain.Repositories;
+using Abp.Runtime.Session;
+using Abp.UI;
 using Ideas.Authorization;
+using Ideas.Cms.Dtos;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ideas.Cms
 {
@@ -26,13 +22,13 @@ namespace Ideas.Cms
     {
         private readonly IRepository<CmsContent, int> _cmsContentRepository;
         private readonly ICmsContentManager _cmsContentManager;
-      
+
         public CmsContentAppService(IRepository<CmsContent, int> cmsContentRepository,
                        ICmsContentManager cmsContentManager)
         {
             _cmsContentRepository = cmsContentRepository;
             _cmsContentManager = cmsContentManager;
-           
+
 
         }
 
@@ -65,20 +61,20 @@ namespace Ideas.Cms
         {
             CmsContent content = new CmsContent();
 
-            var @page =  CmsContent.Create(AbpSession.GetTenantId(), (int)input.Id,input.PageTitle, input.PageContent);
+            var @page = CmsContent.Create(AbpSession.GetTenantId(), (int)input.Id, input.PageTitle, input.PageContent);
 
-            if (input.Id!=0)
+            if (input.Id != 0)
             {
 
                 content = await _cmsContentManager.UpdateAsync(@page);
-              
+
 
             }
             else
             {
 
                 content = await _cmsContentManager.CreatAsync(@page);
-             
+
 
             }
 

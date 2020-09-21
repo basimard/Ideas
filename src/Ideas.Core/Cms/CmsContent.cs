@@ -1,9 +1,6 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Ideas.Cms
 {
@@ -20,29 +17,29 @@ namespace Ideas.Cms
         public virtual int TenantId { get; set; }
 
         [Required]
-        [StringLength(MaxTitleLength,MinimumLength = MinTitleLength)]
+        [StringLength(MaxTitleLength, MinimumLength = MinTitleLength)]
         public string PageTitle { get; protected set; }
 
         [Required]
-        [StringLength(MaxDescriptionLength,MinimumLength = MinDescriptionLength)]
+        [StringLength(MaxDescriptionLength, MinimumLength = MinDescriptionLength)]
         public string PageContent { get; protected set; }
 
         public CmsContent()
         {
 
         }
-        public static CmsContent Create(int tenantId, int id,string pageTitle, string pageContent = null)
+        public static CmsContent Create(int tenantId, int id, string pageTitle, string pageContent = null)
         {
-             var @page = new CmsContent
-                {
-                    Id = id,
-                    TenantId = tenantId,
-                    PageTitle = pageTitle,
-                    PageContent = pageContent
+            var @page = new CmsContent
+            {
+                Id = id,
+                TenantId = tenantId,
+                PageTitle = pageTitle,
+                PageContent = pageContent
 
-                };
+            };
 
-         
+
 
             return @page;
         }

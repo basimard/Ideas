@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Abp;
+﻿using Abp;
 using Abp.Authorization.Users;
 using Abp.Events.Bus;
 using Abp.Events.Bus.Entities;
@@ -15,6 +11,10 @@ using Ideas.EntityFrameworkCore.Seed.Host;
 using Ideas.EntityFrameworkCore.Seed.Tenants;
 using Ideas.MultiTenancy;
 using Ideas.Tests.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ideas.Tests
 {
@@ -205,7 +205,7 @@ namespace Ideas.Tests
         /// </summary>
         protected async Task<Tenant> GetCurrentTenantAsync()
         {
-            var tenantId = AbpSession.GetTenantId(); 
+            var tenantId = AbpSession.GetTenantId();
             return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
         }
     }

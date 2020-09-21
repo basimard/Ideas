@@ -1,18 +1,12 @@
-﻿using Ideas.Cms;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using Shouldly;
-using Xunit;
-using Abp.Application.Services.Dto;
-using Unity;
-using System.Threading.Tasks;
-using Ideas.Cms.Dtos;
-using Abp.AutoMapper;
-using System.Linq;
-using AutoMapper.QueryableExtensions;
+﻿using Abp.Application.Services.Dto;
 using Abp.Runtime.Validation;
+using Ideas.Cms;
+using Ideas.Cms.Dtos;
+using Shouldly;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Ideas.Tests.Cms
 {
@@ -22,13 +16,13 @@ namespace Ideas.Tests.Cms
 
         public CmsAppService_Tests()
         {
-         _cmsAppService = Resolve<ICmsContentAppService>();
+            _cmsAppService = Resolve<ICmsContentAppService>();
         }
         [Fact]
         public async Task GetAll_Test()
         {
             //Assert
-           
+
             // Act
             var output = await _cmsAppService.GetAll();
 
@@ -66,17 +60,17 @@ namespace Ideas.Tests.Cms
                 Id = 0,
                 PageTitle = pageTitle,
                 PageContent = pageContent,
-              
+
             });
 
             //Assert
-          UsingDbContext(context =>
-            {
-               
-                var page = context.CmsContents.FirstOrDefault(e => e.PageTitle == pageTitle &&
-                e.PageContent == pageContent);
-                page.ShouldNotBeNull();
-            });
+            UsingDbContext(context =>
+              {
+
+                  var page = context.CmsContents.FirstOrDefault(e => e.PageTitle == pageTitle &&
+                  e.PageContent == pageContent);
+                  page.ShouldNotBeNull();
+              });
         }
 
         [Fact]
@@ -86,9 +80,9 @@ namespace Ideas.Tests.Cms
             var updatedContent = "Content 1 Updated";
             int updatedPageId = 1;
             CmsContent updatingPage = new CmsContent();
-          
 
-           var updated = await _cmsAppService.InsertOrUpdateCMSContent(new InsertOrUpdateCmsInput
+
+            var updated = await _cmsAppService.InsertOrUpdateCMSContent(new InsertOrUpdateCmsInput
             {
                 Id = 1,
                 PageTitle = updatedTitle,
@@ -101,7 +95,7 @@ namespace Ideas.Tests.Cms
             {
 
                 var page = context.CmsContents.
-                FirstOrDefault(e => e.Id == updatedPageId && 
+                FirstOrDefault(e => e.Id == updatedPageId &&
                 e.PageContent == updatedContent && e.PageTitle == updatedTitle);
                 page.ShouldNotBeNull();
             });
@@ -116,10 +110,10 @@ namespace Ideas.Tests.Cms
             page.Id = 0;
             page.PageTitle = RandomString(151);
             page.PageContent = RandomString(11);
-            
+
             // Assert
-           await Assert.ThrowsAsync<AbpValidationException>(async() => await _cmsAppService.InsertOrUpdateCMSContent(page));
-               
+            await Assert.ThrowsAsync<AbpValidationException>(async () => await _cmsAppService.InsertOrUpdateCMSContent(page));
+
         }
 
         [Fact]

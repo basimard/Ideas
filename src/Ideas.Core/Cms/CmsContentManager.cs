@@ -1,9 +1,7 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.UI;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Ideas.Cms
@@ -16,30 +14,30 @@ namespace Ideas.Cms
     {
         private readonly IRepository<CmsContent, int> _cmsRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
-        public CmsContentManager(IRepository<CmsContent, int> pageRepository ,IUnitOfWorkManager unitOfWorkManager)
+        public CmsContentManager(IRepository<CmsContent, int> pageRepository, IUnitOfWorkManager unitOfWorkManager)
         {
             _cmsRepository = pageRepository;
             _unitOfWorkManager = unitOfWorkManager;
 
         }
 
-   
+
         public async Task<CmsContent> CreatAsync(CmsContent input)
         {
-            
+
             var content = await _cmsRepository.InsertAsync(input);
-           await _unitOfWorkManager.Current.SaveChangesAsync();
+            await _unitOfWorkManager.Current.SaveChangesAsync();
 
             return content;
         }
-     
+
         public async Task<CmsContent> UpdateAsync(CmsContent input)
         {
-           
-                var content = await _cmsRepository.UpdateAsync(input);
-              
+
+            var content = await _cmsRepository.UpdateAsync(input);
+
             return content;
-           
+
         }
         public async Task<List<CmsContent>> GetAllAsync()
         {

@@ -1,16 +1,16 @@
-using System;
-using Castle.MicroKernel.Registration;
-using NSubstitute;
 using Abp.AutoMapper;
+using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Modules;
-using Abp.Configuration.Startup;
 using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
+using Castle.MicroKernel.Registration;
 using Ideas.EntityFrameworkCore;
 using Ideas.Tests.DependencyInjection;
+using NSubstitute;
+using System;
 
 namespace Ideas.Tests
 {
@@ -24,7 +24,7 @@ namespace Ideas.Tests
         public IdeasTestModule(IdeasEntityFrameworkModule abpProjectNameEntityFrameworkModule)
         {
             abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
-           // abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
+            // abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
         }
 
         public override void PreInitialize()
