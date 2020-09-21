@@ -24,7 +24,7 @@ namespace Ideas.Tests
         public IdeasTestModule(IdeasEntityFrameworkModule abpProjectNameEntityFrameworkModule)
         {
             abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
-            abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
+           // abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
         }
 
         public override void PreInitialize()

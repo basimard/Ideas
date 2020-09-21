@@ -23,12 +23,12 @@ namespace Ideas.Cms
         }
 
    
-        public async Task<CmsContent> CreatAsync(CmsContent input)
+        public async Task<int> CreatAsync(CmsContent input)
         {
             
            var id = await _cmsRepository.InsertAndGetIdAsync(input);
-           var content  = await GetAsync(id);
-            return content;
+          
+            return id;
         }
      
         public async Task<CmsContent> UpdateAsync(CmsContent input)

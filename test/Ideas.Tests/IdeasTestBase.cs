@@ -14,6 +14,7 @@ using Ideas.EntityFrameworkCore;
 using Ideas.EntityFrameworkCore.Seed.Host;
 using Ideas.EntityFrameworkCore.Seed.Tenants;
 using Ideas.MultiTenancy;
+using Ideas.Tests.Data;
 
 namespace Ideas.Tests
 {
@@ -46,6 +47,7 @@ namespace Ideas.Tests
             });
 
             LoginAsDefaultTenantAdmin();
+            UsingDbContext(context => new TestDataBuilder(context).Build());
         }
 
         #region UsingDbContext
@@ -203,7 +205,7 @@ namespace Ideas.Tests
         /// </summary>
         protected async Task<Tenant> GetCurrentTenantAsync()
         {
-            var tenantId = AbpSession.GetTenantId();
+            var tenantId = AbpSession.GetTenantId(); 
             return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
         }
     }

@@ -10,6 +10,9 @@ using Abp.AutoMapper;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
+using Ideas.Sessions;
+using Abp.Authorization;
+using Ideas.Authorization;
 
 namespace Ideas.Cms
 {
@@ -17,17 +20,19 @@ namespace Ideas.Cms
      * Service Content Managment
      * @author:Basim E
      */
+    [AbpAuthorize(PermissionNames.Pages_Cms)]
     public class CmsContentAppService : IdeasAppServiceBase, ICmsContentAppService
+
     {
         private readonly IRepository<CmsContent, int> _cmsContentRepository;
         private readonly ICmsContentManager _cmsContentManager;
-        private readonly IAbpSession _session;
+      
         public CmsContentAppService(IRepository<CmsContent, int> cmsContentRepository,
-                       ICmsContentManager cmsContentManager, IAbpSession session)
+                       ICmsContentManager cmsContentManager)
         {
             _cmsContentRepository = cmsContentRepository;
             _cmsContentManager = cmsContentManager;
-            _session = session;
+           
 
         }
 
@@ -60,8 +65,7 @@ namespace Ideas.Cms
         {
             CmsContent content = new CmsContent();
 
-
-            var @page = content.Create(1, (int)input.Id,input.PageTitle, input.PageContent);
+            var @page =  CmsContent.Create(1, (int)input.Id,input.PageTitle, input.PageContent);
 
             if (input.Id!=0)
             {
@@ -73,8 +77,10 @@ namespace Ideas.Cms
             else
             {
 
-                content = await _cmsContentManager.CreatAsync(@page);
-                UnitOfWorkManager.Current.SaveChangesAsync();
+                var id = await _cmsContentManager.CreatAsync(@page);
+                await UnitOfWorkManager.Current.SaveChangesAsync();
+                content = await _cmsContentManager.GetAsync(id);
+              
 
             }
 

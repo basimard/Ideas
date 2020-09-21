@@ -13,21 +13,25 @@ namespace Ideas.Cms
      * */
     public class CmsContent : FullAuditedEntity<int>, IMustHaveTenant
     {
-        public const int MaxTitleLength = 128;
-        public const int MaxDescriptionLength = 2048;
-
-
+        public const int MaxTitleLength = 100;
+        public const int MaxDescriptionLength = 2000;
+        public const int MinTitleLength = 2;
+        public const int MinDescriptionLength = 10;
         public virtual int TenantId { get; set; }
 
         [Required]
-        [StringLength(MaxTitleLength)]
-        public string PageTitle { get; set; }
+        [StringLength(MaxTitleLength,MinimumLength = MinTitleLength)]
+        public string PageTitle { get; protected set; }
 
         [Required]
-        [StringLength(MaxDescriptionLength)]
-        public string PageContent { get; set; }
+        [StringLength(MaxDescriptionLength,MinimumLength = MinDescriptionLength)]
+        public string PageContent { get; protected set; }
 
-        public CmsContent Create(int tenantId, int id,string pageTitle, string pageContent = null)
+        public CmsContent()
+        {
+
+        }
+        public static CmsContent Create(int tenantId, int id,string pageTitle, string pageContent = null)
         {
              var @page = new CmsContent
                 {
